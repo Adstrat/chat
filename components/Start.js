@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     flexDirection: "column",
     width: "88%",
-    height: "44%",
+    height: 265,
     backgroundColor: "white",
     justifyContent: "space-evenly",
     marginBottom: 20,
