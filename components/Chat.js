@@ -1,8 +1,9 @@
 import React from 'react';
-import { View, StyleSheet, KeyboardAvoidingView, Platform, Text } from 'react-native';
+import { View, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Bubble } from "react-native-gifted-chat";
 const firebase = require("firebase");
 require("firebase/firestore");
+import '@firebase/auth';
 
 export default class Chat extends React.Component {
   constructor() {
@@ -10,9 +11,10 @@ export default class Chat extends React.Component {
     this.state = {
       messages: [],
       user: "",
-      uid: "",
+      uid: 0,
     };
 
+    // connects to fireatore database
     if (!firebase.apps.length) {
       firebase.initializeApp({
         apiKey: "AIzaSyCZdwS2A2d2OlAp9s6bsibC4l-_DOTU5S4",
@@ -24,6 +26,7 @@ export default class Chat extends React.Component {
         measurementId: "G-EQRRZJNG0W"
       });
     }
+    this.referenceChatMessages = firebase.firestore().collection("messages");
   }
 
   componentDidMount() {
@@ -51,10 +54,13 @@ export default class Chat extends React.Component {
 
 
   componentWillUnmount() {
+    // stops listening for authentication
     this.unsubscribe();
+    // stops listening for changes
     this.authUsubscribe();
   }
 
+  // when something changes in messages collection, updates messages state
   onCollectionUpdate = (querySnapshot) => {
     const messages = [];
     // goes through each document
@@ -73,6 +79,7 @@ export default class Chat extends React.Component {
     });
   };
 
+  // adds messages to database
   addMessages() {
     const message = this.state.messages[0];
     this.referenceChatMessages.add({
@@ -115,13 +122,13 @@ export default class Chat extends React.Component {
       <View
         style={[styles.container,
         { backgroundColor: color }]}>
-        <Text>{this.state.loggedInText}</Text>
         <GiftedChat
           renderBubble={this.renderBubble.bind(this)}
           messages={this.state.messages}
           onSend={messages => this.onSend(messages)}
           user={{
-            _id: 1,
+            _id: this.state.uid,
+            avatar: 'https://placeimg.com/140/140/any',
           }}
         />
         {/* prevents keyboard from hiding message on some android devices */}
