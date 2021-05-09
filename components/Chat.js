@@ -57,7 +57,7 @@ export default class Chat extends React.Component {
     // stops listening for authentication
     this.unsubscribe();
     // stops listening for changes
-    this.authUsubscribe();
+    this.authUnsubscribe();
   }
 
   // when something changes in messages collection, updates messages state
