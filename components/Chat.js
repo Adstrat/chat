@@ -10,8 +10,12 @@ export default class Chat extends React.Component {
     super();
     this.state = {
       messages: [],
-      user: "",
-      uid: 0,
+      user: {
+        _id: '',
+        name: '',
+        avatar: '',
+        createdAt: ''
+      },
     };
 
     // connects to fireatore database
@@ -26,7 +30,6 @@ export default class Chat extends React.Component {
         measurementId: "G-EQRRZJNG0W"
       });
     }
-    this.referenceChatMessages = firebase.firestore().collection("messages");
   }
 
   componentDidMount() {
@@ -43,7 +46,12 @@ export default class Chat extends React.Component {
 
       //update user state with currently active user data
       this.setState({
-        uid: user.uid,
+        user: {
+          _id: user.uid,
+          name: name,
+          avatar: "https://placeimg.com/140/140/any",
+          createdAt: new Date()
+        },
         messages: [],
       });
       this.unsubscribe = this.referenceChatMessages
@@ -71,7 +79,11 @@ export default class Chat extends React.Component {
         _id: data._id,
         text: data.text,
         createdAt: data.createdAt.toDate(),
-        user: data.user,
+        user: {
+          _id: data.user._id,
+
+
+        }
       });
     });
     this.setState({
@@ -126,10 +138,7 @@ export default class Chat extends React.Component {
           renderBubble={this.renderBubble.bind(this)}
           messages={this.state.messages}
           onSend={messages => this.onSend(messages)}
-          user={{
-            _id: this.state.uid,
-            avatar: 'https://placeimg.com/140/140/any',
-          }}
+          user={this.state.user}
         />
         {/* prevents keyboard from hiding message on some android devices */}
         { Platform.OS === "android" ?
