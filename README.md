@@ -2,9 +2,13 @@
 
 Chat is a mobile application which provides users with a real-time chat interface and options to share images and maps of their location.
 
-It was developed using [React Native](https://reactnative.dev/) and [Expo](https://expo.io). It uses the [Gifted Chat library](https://github.com/FaridSafi/react-native-gifted-chat) to create the chat interface and [Google Firebase](https://firebase.google.com/) to store messages and images. 
+It was developed using [React Native](https://reactnative.dev/) and [Expo](https://expo.io). The App also uses the [Gifted Chat library](https://github.com/FaridSafi/react-native-gifted-chat) to create the chat interface and [Google Firebase](https://firebase.google.com/) to store messages and images. 
 
+# Example Screen Shots
 
+Start Screen             |  Chat Screen
+:-------------------------:|:-------------------------:
+![](assets/Chat%20Start.png) |![](assets/Chat%20Screen.png)
 
 ## Features
 
@@ -30,7 +34,7 @@ by typing in the following command in your terminal:
 ```
 npm install expo-cli --global
 ```
-* Install dependencies:
+* After cloning the repo, install dependencies:
 
 ```
 npm install
